@@ -70,5 +70,4 @@ public class BookingManager(IRepository<Booking> bookingRepository, IRepository<
         }
         return fullyOccupiedDates;
     }
-
 }
