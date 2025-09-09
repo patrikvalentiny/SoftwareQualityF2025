@@ -1,9 +1,7 @@
-﻿using HotelBooking.Infrastructure;
+﻿namespace HotelBooking.Infrastructure;
 
-namespace HotelBooking.Infrastructure
+public interface IDbInitializer
 {
-    public interface IDbInitializer
-    {
-        void Initialize(HotelBookingContext context);
-    }
+    void Initialize(HotelBookingContext context);
 }
+

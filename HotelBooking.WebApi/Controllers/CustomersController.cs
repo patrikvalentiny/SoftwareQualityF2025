@@ -1,27 +1,19 @@
-﻿using System.Collections.Generic;
-using HotelBooking.Core;
+﻿using HotelBooking.Core.Entities;
+using HotelBooking.Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 
-namespace HotelBooking.WebApi.Controllers
+namespace HotelBooking.WebApi.Controllers;
+
+[ApiController]
+[Route("[controller]")]
+public class CustomersController(IRepository<Customer> repository) : Controller
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class CustomersController : Controller
+    // GET: customers
+    [HttpGet]
+    public async Task<IEnumerable<Customer>> Get()
     {
-        private readonly IRepository<Customer> repository;
-
-        public CustomersController(IRepository<Customer> repos)
-        {
-            repository = repos;
-        }
-
-        // GET: customers
-        [HttpGet]
-        public async Task<IEnumerable<Customer>> Get()
-        {
-            return await repository.GetAllAsync();
-        }
-
+        return await repository.GetAllAsync();
     }
+
 }

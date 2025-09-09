@@ -1,68 +1,61 @@
-﻿using System;
-using System.Collections.Generic;
-using HotelBooking.Core;
+﻿using HotelBooking.Core.Entities;
+using HotelBooking.Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 
-namespace HotelBooking.WebApi.Controllers
+namespace HotelBooking.WebApi.Controllers;
+
+[ApiController]
+[Route("[controller]")]
+public class RoomsController(IRepository<Room> repository) : Controller
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class RoomsController : Controller
+
+    // GET: rooms
+    [HttpGet(Name = "GetRooms")]
+    public async Task<IEnumerable<Room>> Get()
     {
-        private readonly IRepository<Room> repository;
-
-        public RoomsController(IRepository<Room> repos)
-        {
-            repository = repos;
-        }
-
-        // GET: rooms
-        [HttpGet(Name = "GetRooms")]
-        public async Task<IEnumerable<Room>> Get()
-        {
-            return await repository.GetAllAsync();
-        }
-
-        // GET rooms/5
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
-        {
-            var item = await repository.GetAsync(id);
-            if (item == null)
-            {
-                return NotFound();
-            }
-            return new ObjectResult(item);
-        }
-
-        // POST roooms
-        [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Room room)
-        {
-            if (room == null)
-            {
-                return BadRequest();
-            }
-
-            await repository.AddAsync(room);
-            return CreatedAtRoute("GetRooms", null);
-        }
-
-
-        // DELETE rooms/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
-        {
-            if (id > 0)
-            {
-                await repository.RemoveAsync(id);
-                return NoContent();
-            }
-            else {
-                return BadRequest();
-            }
-        }
-
+        return await repository.GetAllAsync();
     }
+
+    // GET rooms/5
+    [HttpGet("{id}")]
+    public async Task<IActionResult> Get(int id)
+    {
+        var item = await repository.GetAsync(id);
+        if (item == null)
+        {
+            return NotFound();
+        }
+        return new ObjectResult(item);
+    }
+
+    // POST roooms
+    [HttpPost]
+    public async Task<IActionResult> Post([FromBody] Room room)
+    {
+        if (room == null)
+        {
+            return BadRequest();
+        }
+
+        await repository.AddAsync(room);
+        return CreatedAtRoute("GetRooms", null);
+    }
+
+
+    // DELETE rooms/5
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        if (id > 0)
+        {
+            await repository.RemoveAsync(id);
+            return NoContent();
+        }
+        else
+        {
+            return BadRequest();
+        }
+    }
+
 }
