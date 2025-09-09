@@ -1,0 +1,35 @@
+name: Run Unit Tests
+
+on:
+  # Trigger when there is a pull request to main or development branches
+  pull_request:
+    branches:
+      - main
+      - development
+  # Trigger when there are pushes to main or development branches
+  push:
+    branches:
+      - main
+      - development
+  # Manual trigger option in GitHub Actions
+  workflow_dispatch:
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Run unit tests
+        run: |
+            cd HotelBooking.UnitTests
+            dotnet test --configuration Release --no-restore
