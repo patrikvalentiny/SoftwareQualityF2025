@@ -37,8 +37,8 @@ public class FakeRoomRepository : IRepository<Room>
     {
         IEnumerable<Room> rooms = new List<Room>
             {
-                new Room { Id=1, Description="A" },
-                new Room { Id=2, Description="B" },
+                new() { Id=1, Description="A" },
+                new() { Id=2, Description="B" },
             };
 
         Task<IEnumerable<Room>> roomsTask = Task.Factory.StartNew(() => rooms);

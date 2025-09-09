@@ -19,8 +19,8 @@ public class RoomsControllerTests
     {
         var rooms = new List<Room>
             {
-                new Room { Id=1, Description="A" },
-                new Room { Id=2, Description="B" },
+                new() { Id=1, Description="A" },
+                new() { Id=2, Description="B" },
             };
 
         // Create fake RoomRepository. 
