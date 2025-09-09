@@ -11,15 +11,15 @@ namespace HotelBooking.UnitTests;
 
 public class GetFullyOccupiedDatesTest
 {
-    private readonly Mock<IRepository<Booking>> _bookingRepository;
-    private readonly Mock<IRepository<Room>> _roomRepository;
-    private readonly IBookingManager _bookingManager;
+    private readonly Mock<IRepository<Booking>> bookingRepository;
+    private readonly Mock<IRepository<Room>> roomRepository;
+    private readonly IBookingManager bookingManager;
 
     public GetFullyOccupiedDatesTest()
     {
-        _bookingRepository = new Mock<IRepository<Booking>>();
-        _roomRepository = new Mock<IRepository<Room>>();
-        _bookingManager = new BookingManager(_bookingRepository.Object, _roomRepository.Object);
+        bookingRepository = new Mock<IRepository<Booking>>();
+        roomRepository = new Mock<IRepository<Room>>();
+        bookingManager = new BookingManager(bookingRepository.Object, roomRepository.Object);
     }
 
     [Fact]
@@ -30,7 +30,7 @@ public class GetFullyOccupiedDatesTest
         DateTime endDate = DateTime.Today.AddDays(10);
 
         // Act
-        Task result() => _bookingManager.GetFullyOccupiedDates(startDate, endDate);
+        Task result() => bookingManager.GetFullyOccupiedDates(startDate, endDate);
 
         // Assert
         await Assert.ThrowsAsync<ArgumentException>(result);
@@ -52,14 +52,14 @@ public class GetFullyOccupiedDatesTest
             new() { Id = 2, StartDate = DateTime.Today.AddDays(10), EndDate = DateTime.Today.AddDays(20), IsActive = true, RoomId = 2 }
         };
 
-        _roomRepository.Setup(r => r.GetAllAsync()).ReturnsAsync(rooms);
-        _bookingRepository.Setup(b => b.GetAllAsync()).ReturnsAsync(bookings);
+        roomRepository.Setup(r => r.GetAllAsync()).ReturnsAsync(rooms);
+        bookingRepository.Setup(b => b.GetAllAsync()).ReturnsAsync(bookings);
 
         DateTime startDate = DateTime.Today.AddDays(10);
         DateTime endDate = DateTime.Today.AddDays(20);
 
         // Act
-        var fullyOccupiedDates = await _bookingManager.GetFullyOccupiedDates(startDate, endDate);
+        var fullyOccupiedDates = await bookingManager.GetFullyOccupiedDates(startDate, endDate);
 
         // Assert
         Assert.Equal(11, fullyOccupiedDates.Count); // 11 days inclusive (10th to 20th)
@@ -84,14 +84,14 @@ public class GetFullyOccupiedDatesTest
             new() { Id = 1, StartDate = DateTime.Today.AddDays(1), EndDate = DateTime.Today.AddDays(1), IsActive = true, RoomId = 1 }
         };
 
-        _roomRepository.Setup(r => r.GetAllAsync()).ReturnsAsync(rooms);
-        _bookingRepository.Setup(b => b.GetAllAsync()).ReturnsAsync(bookings);
+        roomRepository.Setup(r => r.GetAllAsync()).ReturnsAsync(rooms);
+        bookingRepository.Setup(b => b.GetAllAsync()).ReturnsAsync(bookings);
 
         DateTime startDate = DateTime.Today.AddDays(1);
         DateTime endDate = DateTime.Today.AddDays(1);
 
         // Act
-        var fullyOccupiedDates = await _bookingManager.GetFullyOccupiedDates(startDate, endDate);
+        var fullyOccupiedDates = await bookingManager.GetFullyOccupiedDates(startDate, endDate);
 
         // Assert
         Assert.Empty(fullyOccupiedDates);
@@ -109,14 +109,14 @@ public class GetFullyOccupiedDatesTest
 
         var bookings = new List<Booking>(); // No bookings
 
-        _roomRepository.Setup(r => r.GetAllAsync()).ReturnsAsync(rooms);
-        _bookingRepository.Setup(b => b.GetAllAsync()).ReturnsAsync(bookings);
+        roomRepository.Setup(r => r.GetAllAsync()).ReturnsAsync(rooms);
+        bookingRepository.Setup(b => b.GetAllAsync()).ReturnsAsync(bookings);
 
         DateTime startDate = DateTime.Today.AddDays(25);
         DateTime endDate = DateTime.Today.AddDays(30);
 
         // Act
-        var fullyOccupiedDates = await _bookingManager.GetFullyOccupiedDates(startDate, endDate);
+        var fullyOccupiedDates = await bookingManager.GetFullyOccupiedDates(startDate, endDate);
 
         // Assert
         Assert.Empty(fullyOccupiedDates);
@@ -141,14 +141,14 @@ public class GetFullyOccupiedDatesTest
             new() { Id = 3, StartDate = DateTime.Today.AddDays(10), EndDate = DateTime.Today.AddDays(15), IsActive = true, RoomId = 2 }
         };
 
-        _roomRepository.Setup(r => r.GetAllAsync()).ReturnsAsync(rooms);
-        _bookingRepository.Setup(b => b.GetAllAsync()).ReturnsAsync(bookings);
+        roomRepository.Setup(r => r.GetAllAsync()).ReturnsAsync(rooms);
+        bookingRepository.Setup(b => b.GetAllAsync()).ReturnsAsync(bookings);
 
         DateTime startDate = DateTime.Today.AddDays(1);
         DateTime endDate = DateTime.Today.AddDays(15);
 
         // Act
-        var fullyOccupiedDates = await _bookingManager.GetFullyOccupiedDates(startDate, endDate);
+        var fullyOccupiedDates = await bookingManager.GetFullyOccupiedDates(startDate, endDate);
 
         // Assert
         // Should return 6 dates (Day 10 through Day 15)
@@ -174,13 +174,13 @@ public class GetFullyOccupiedDatesTest
             new() { Id = 2, StartDate = DateTime.Today.AddDays(15), EndDate = DateTime.Today.AddDays(15), IsActive = true, RoomId = 2 }
         };
 
-        _roomRepository.Setup(r => r.GetAllAsync()).ReturnsAsync(rooms);
-        _bookingRepository.Setup(b => b.GetAllAsync()).ReturnsAsync(bookings);
+        roomRepository.Setup(r => r.GetAllAsync()).ReturnsAsync(rooms);
+        bookingRepository.Setup(b => b.GetAllAsync()).ReturnsAsync(bookings);
 
         DateTime singleDay = DateTime.Today.AddDays(15);
 
         // Act
-        var fullyOccupiedDates = await _bookingManager.GetFullyOccupiedDates(singleDay, singleDay);
+        var fullyOccupiedDates = await bookingManager.GetFullyOccupiedDates(singleDay, singleDay);
 
         // Assert
         Assert.Single(fullyOccupiedDates);
@@ -205,14 +205,14 @@ public class GetFullyOccupiedDatesTest
             new() { Id = 2, StartDate = DateTime.Today.AddDays(10), EndDate = DateTime.Today.AddDays(10), IsActive = false, RoomId = 2 }
         };
 
-        _roomRepository.Setup(r => r.GetAllAsync()).ReturnsAsync(rooms);
-        _bookingRepository.Setup(b => b.GetAllAsync()).ReturnsAsync(bookings);
+        roomRepository.Setup(r => r.GetAllAsync()).ReturnsAsync(rooms);
+        bookingRepository.Setup(b => b.GetAllAsync()).ReturnsAsync(bookings);
 
         DateTime startDate = DateTime.Today.AddDays(10);
         DateTime endDate = DateTime.Today.AddDays(10);
 
         // Act
-        var fullyOccupiedDates = await _bookingManager.GetFullyOccupiedDates(startDate, endDate);
+        var fullyOccupiedDates = await bookingManager.GetFullyOccupiedDates(startDate, endDate);
 
         // Assert
         Assert.Empty(fullyOccupiedDates);

@@ -11,15 +11,15 @@ namespace HotelBooking.UnitTests;
 
 public class FindAvailableRoomTests
 {
-    private readonly Mock<IRepository<Booking>> mockBookingRepository;
-    private readonly Mock<IRepository<Room>> mockRoomRepository;
+    private readonly Mock<IRepository<Booking>> bookingRepository;
+    private readonly Mock<IRepository<Room>> roomRepository;
     private readonly IBookingManager bookingManager;
 
     public FindAvailableRoomTests()
     {
-        mockBookingRepository = new Mock<IRepository<Booking>>();
-        mockRoomRepository = new Mock<IRepository<Room>>();
-        bookingManager = new BookingManager(mockBookingRepository.Object, mockRoomRepository.Object);
+        bookingRepository = new Mock<IRepository<Booking>>();
+        roomRepository = new Mock<IRepository<Room>>();
+        bookingManager = new BookingManager(bookingRepository.Object, roomRepository.Object);
     }
 
     [Fact]
@@ -75,8 +75,8 @@ public class FindAvailableRoomTests
 
         var bookings = new List<Booking>(); // No existing bookings
 
-        mockRoomRepository.Setup(r => r.GetAllAsync()).ReturnsAsync(rooms);
-        mockBookingRepository.Setup(b => b.GetAllAsync()).ReturnsAsync(bookings);
+        roomRepository.Setup(r => r.GetAllAsync()).ReturnsAsync(rooms);
+        bookingRepository.Setup(b => b.GetAllAsync()).ReturnsAsync(bookings);
 
         DateTime startDate = DateTime.Today.AddDays(1);
         DateTime endDate = DateTime.Today.AddDays(3);
@@ -106,8 +106,8 @@ public class FindAvailableRoomTests
             new() { Id = 2, StartDate = DateTime.Today.AddDays(1), EndDate = DateTime.Today.AddDays(5), IsActive = true, RoomId = 2 }
         };
 
-        mockRoomRepository.Setup(r => r.GetAllAsync()).ReturnsAsync(rooms);
-        mockBookingRepository.Setup(b => b.GetAllAsync()).ReturnsAsync(bookings);
+        roomRepository.Setup(r => r.GetAllAsync()).ReturnsAsync(rooms);
+        bookingRepository.Setup(b => b.GetAllAsync()).ReturnsAsync(bookings);
 
         DateTime startDate = DateTime.Today.AddDays(2);
         DateTime endDate = DateTime.Today.AddDays(4);
@@ -135,8 +135,8 @@ public class FindAvailableRoomTests
             new() { Id = 1, StartDate = DateTime.Today.AddDays(1), EndDate = DateTime.Today.AddDays(5), IsActive = true, RoomId = 1 }
         };
 
-        mockRoomRepository.Setup(r => r.GetAllAsync()).ReturnsAsync(rooms);
-        mockBookingRepository.Setup(b => b.GetAllAsync()).ReturnsAsync(bookings);
+        roomRepository.Setup(r => r.GetAllAsync()).ReturnsAsync(rooms);
+        bookingRepository.Setup(b => b.GetAllAsync()).ReturnsAsync(bookings);
 
         DateTime startDate = DateTime.Today.AddDays(2);
         DateTime endDate = DateTime.Today.AddDays(4);
@@ -163,8 +163,8 @@ public class FindAvailableRoomTests
             new() { Id = 1, StartDate = DateTime.Today.AddDays(1), EndDate = DateTime.Today.AddDays(3), IsActive = true, RoomId = 1 }
         };
 
-        mockRoomRepository.Setup(r => r.GetAllAsync()).ReturnsAsync(rooms);
-        mockBookingRepository.Setup(b => b.GetAllAsync()).ReturnsAsync(bookings);
+        roomRepository.Setup(r => r.GetAllAsync()).ReturnsAsync(rooms);
+        bookingRepository.Setup(b => b.GetAllAsync()).ReturnsAsync(bookings);
 
         DateTime startDate = DateTime.Today.AddDays(5);
         DateTime endDate = DateTime.Today.AddDays(7);
@@ -191,8 +191,8 @@ public class FindAvailableRoomTests
             new() { Id = 1, StartDate = DateTime.Today.AddDays(10), EndDate = DateTime.Today.AddDays(12), IsActive = true, RoomId = 1 }
         };
 
-        mockRoomRepository.Setup(r => r.GetAllAsync()).ReturnsAsync(rooms);
-        mockBookingRepository.Setup(b => b.GetAllAsync()).ReturnsAsync(bookings);
+        roomRepository.Setup(r => r.GetAllAsync()).ReturnsAsync(rooms);
+        bookingRepository.Setup(b => b.GetAllAsync()).ReturnsAsync(bookings);
 
         DateTime startDate = DateTime.Today.AddDays(5);
         DateTime endDate = DateTime.Today.AddDays(7);
@@ -219,8 +219,8 @@ public class FindAvailableRoomTests
             new() { Id = 1, StartDate = DateTime.Today.AddDays(1), EndDate = DateTime.Today.AddDays(5), IsActive = false, RoomId = 1 }
         };
 
-        mockRoomRepository.Setup(r => r.GetAllAsync()).ReturnsAsync(rooms);
-        mockBookingRepository.Setup(b => b.GetAllAsync()).ReturnsAsync(bookings);
+        roomRepository.Setup(r => r.GetAllAsync()).ReturnsAsync(rooms);
+        bookingRepository.Setup(b => b.GetAllAsync()).ReturnsAsync(bookings);
 
         DateTime startDate = DateTime.Today.AddDays(2);
         DateTime endDate = DateTime.Today.AddDays(4);
@@ -239,8 +239,8 @@ public class FindAvailableRoomTests
         var rooms = new List<Room>(); // No rooms available
         var bookings = new List<Booking>();
 
-        mockRoomRepository.Setup(r => r.GetAllAsync()).ReturnsAsync(rooms);
-        mockBookingRepository.Setup(b => b.GetAllAsync()).ReturnsAsync(bookings);
+        roomRepository.Setup(r => r.GetAllAsync()).ReturnsAsync(rooms);
+        bookingRepository.Setup(b => b.GetAllAsync()).ReturnsAsync(bookings);
 
         DateTime startDate = DateTime.Today.AddDays(1);
         DateTime endDate = DateTime.Today.AddDays(3);
@@ -268,8 +268,8 @@ public class FindAvailableRoomTests
             new() { Id = 1, StartDate = DateTime.Today.AddDays(1), EndDate = DateTime.Today.AddDays(1), IsActive = true, RoomId = 1 }
         };
 
-        mockRoomRepository.Setup(r => r.GetAllAsync()).ReturnsAsync(rooms);
-        mockBookingRepository.Setup(b => b.GetAllAsync()).ReturnsAsync(bookings);
+        roomRepository.Setup(r => r.GetAllAsync()).ReturnsAsync(rooms);
+        bookingRepository.Setup(b => b.GetAllAsync()).ReturnsAsync(bookings);
 
         DateTime singleDay = DateTime.Today.AddDays(1);
 
@@ -293,8 +293,8 @@ public class FindAvailableRoomTests
 
         var bookings = new List<Booking>(); // No bookings, all rooms available
 
-        mockRoomRepository.Setup(r => r.GetAllAsync()).ReturnsAsync(rooms);
-        mockBookingRepository.Setup(b => b.GetAllAsync()).ReturnsAsync(bookings);
+        roomRepository.Setup(r => r.GetAllAsync()).ReturnsAsync(rooms);
+        bookingRepository.Setup(b => b.GetAllAsync()).ReturnsAsync(bookings);
 
         DateTime startDate = DateTime.Today.AddDays(1);
         DateTime endDate = DateTime.Today.AddDays(3);
