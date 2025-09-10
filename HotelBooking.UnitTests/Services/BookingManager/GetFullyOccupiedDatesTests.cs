@@ -9,13 +9,13 @@ using Xunit;
 
 namespace HotelBooking.UnitTests.Services.BookingManager;
 
-public class GetFullyOccupiedDatesTest
+public class GetFullyOccupiedDatesTests
 {
     private readonly Mock<IRepository<Booking>> bookingRepository;
     private readonly Mock<IRepository<Room>> roomRepository;
     private readonly IBookingManager bookingManager;
 
-    public GetFullyOccupiedDatesTest()
+    public GetFullyOccupiedDatesTests()
     {
         bookingRepository = new Mock<IRepository<Booking>>();
         roomRepository = new Mock<IRepository<Room>>();

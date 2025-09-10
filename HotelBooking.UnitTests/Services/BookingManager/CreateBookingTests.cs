@@ -10,7 +10,7 @@ using Xunit;
 
 namespace HotelBooking.UnitTests.Services.BookingManager;
 
-public class CreateBookingTest
+public class CreateBookingTests
 {
     private readonly Mock<IRepository<Booking>> bookingRepository;
     private readonly Mock<IRepository<Room>> roomRepository;
@@ -18,7 +18,7 @@ public class CreateBookingTest
     private readonly Faker<Booking> bookingFaker;
     private readonly Faker<Room> roomFaker;
 
-    public CreateBookingTest()
+    public CreateBookingTests()
     {
         bookingRepository = new Mock<IRepository<Booking>>();
         roomRepository = new Mock<IRepository<Room>>();
