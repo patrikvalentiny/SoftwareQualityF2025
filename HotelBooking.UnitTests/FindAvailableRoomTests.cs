@@ -6,6 +6,7 @@ using HotelBooking.Core.Interfaces;
 using HotelBooking.Core.Services;
 using Moq;
 using Xunit;
+using FluentAssertions;
 
 namespace HotelBooking.UnitTests;
 
@@ -32,7 +33,7 @@ public class FindAvailableRoomTests
         Task Result() => bookingManager.FindAvailableRoom(date, date);
 
         // Assert
-        await Assert.ThrowsAsync<ArgumentException>(Result);
+        await FluentActions.Invoking(Result).Should().ThrowAsync<ArgumentException>();
     }
 
     [Fact]
@@ -46,7 +47,7 @@ public class FindAvailableRoomTests
         Task Result() => bookingManager.FindAvailableRoom(pastDate, endDate);
 
         // Assert
-        await Assert.ThrowsAsync<ArgumentException>(Result);
+        await FluentActions.Invoking(Result).Should().ThrowAsync<ArgumentException>();
     }
 
     [Fact]
@@ -60,7 +61,7 @@ public class FindAvailableRoomTests
         Task Result() => bookingManager.FindAvailableRoom(startDate, endDate);
 
         // Assert
-        await Assert.ThrowsAsync<ArgumentException>(Result);
+        await FluentActions.Invoking(Result).Should().ThrowAsync<ArgumentException>();
     }
 
     [Fact]
@@ -85,8 +86,8 @@ public class FindAvailableRoomTests
         int roomId = await bookingManager.FindAvailableRoom(startDate, endDate);
 
         // Assert
-        Assert.NotEqual(-1, roomId);
-        Assert.True(roomId == 1 || roomId == 2); // Should return one of the available rooms
+        roomId.Should().NotBe(-1);
+        (roomId == 1 || roomId == 2).Should().BeTrue();
     }
 
     [Fact]
@@ -116,7 +117,7 @@ public class FindAvailableRoomTests
         int roomId = await bookingManager.FindAvailableRoom(startDate, endDate);
 
         // Assert
-        Assert.Equal(-1, roomId);
+        roomId.Should().Be(-1);
     }
 
     [Fact]
@@ -145,7 +146,7 @@ public class FindAvailableRoomTests
         int roomId = await bookingManager.FindAvailableRoom(startDate, endDate);
 
         // Assert
-        Assert.Equal(2, roomId); // Should return room 2 as it's available
+        roomId.Should().Be(2);
     }
 
     [Fact]
@@ -173,7 +174,7 @@ public class FindAvailableRoomTests
         int roomId = await bookingManager.FindAvailableRoom(startDate, endDate);
 
         // Assert
-        Assert.Equal(1, roomId);
+        roomId.Should().Be(1);
     }
 
     [Fact]
@@ -201,7 +202,7 @@ public class FindAvailableRoomTests
         int roomId = await bookingManager.FindAvailableRoom(startDate, endDate);
 
         // Assert
-        Assert.Equal(1, roomId);
+        roomId.Should().Be(1);
     }
 
     [Fact]
@@ -229,7 +230,7 @@ public class FindAvailableRoomTests
         int roomId = await bookingManager.FindAvailableRoom(startDate, endDate);
 
         // Assert
-        Assert.Equal(1, roomId);
+        roomId.Should().Be(1);
     }
 
     [Fact]
@@ -249,7 +250,7 @@ public class FindAvailableRoomTests
         int roomId = await bookingManager.FindAvailableRoom(startDate, endDate);
 
         // Assert
-        Assert.Equal(-1, roomId);
+        roomId.Should().Be(-1);
     }
 
     [Fact]
@@ -277,7 +278,7 @@ public class FindAvailableRoomTests
         int roomId = await bookingManager.FindAvailableRoom(singleDay, singleDay);
 
         // Assert
-        Assert.Equal(2, roomId); // Should return room 2 as room 1 is booked
+        roomId.Should().Be(2);
     }
 
     [Fact]
@@ -303,6 +304,6 @@ public class FindAvailableRoomTests
         int roomId = await bookingManager.FindAvailableRoom(startDate, endDate);
 
         // Assert
-        Assert.Equal(1, roomId); // Should return the first room since all are available
+        roomId.Should().Be(1);
     }
 }

@@ -6,6 +6,7 @@ using HotelBooking.Core.Interfaces;
 using HotelBooking.Core.Services;
 using Moq;
 using Xunit;
+using FluentAssertions;
 
 namespace HotelBooking.UnitTests;
 
@@ -48,9 +49,9 @@ public class CreateBookingTest
         var result = await bookingManager.CreateBooking(booking);
 
         // Assert
-        Assert.True(result);
-        Assert.True(booking.IsActive);
-        Assert.NotEqual(0, booking.RoomId);
+        result.Should().BeTrue();
+        booking.IsActive.Should().BeTrue();
+        booking.RoomId.Should().NotBe(0);
         bookingRepository.Verify(b => b.AddAsync(booking), Times.Once);
     }
 
@@ -85,7 +86,7 @@ public class CreateBookingTest
         var result = await bookingManager.CreateBooking(booking);
 
         // Assert
-        Assert.False(result);
+        result.Should().BeFalse();
         bookingRepository.Verify(b => b.AddAsync(It.IsAny<Booking>()), Times.Never);
     }
 
@@ -101,7 +102,7 @@ public class CreateBookingTest
         };
 
         // Act & Assert
-        await Assert.ThrowsAsync<ArgumentException>(() => bookingManager.CreateBooking(booking));
+        await FluentActions.Invoking(() => bookingManager.CreateBooking(booking)).Should().ThrowAsync<ArgumentException>();
         
         // Verify that no repository methods were called due to early validation
         bookingRepository.Verify(b => b.GetAllAsync(), Times.Never);
@@ -121,7 +122,7 @@ public class CreateBookingTest
         };
 
         // Act & Assert
-        await Assert.ThrowsAsync<ArgumentException>(() => bookingManager.CreateBooking(booking));
+        await FluentActions.Invoking(() => bookingManager.CreateBooking(booking)).Should().ThrowAsync<ArgumentException>();
     }
 
     [Fact]
@@ -136,7 +137,7 @@ public class CreateBookingTest
         };
 
         // Act & Assert
-        await Assert.ThrowsAsync<ArgumentException>(() => bookingManager.CreateBooking(booking));
+        await FluentActions.Invoking(() => bookingManager.CreateBooking(booking)).Should().ThrowAsync<ArgumentException>();
     }
 
     [Fact]
@@ -168,9 +169,9 @@ public class CreateBookingTest
         var result = await bookingManager.CreateBooking(booking);
 
         // Assert
-        Assert.True(result);
-        Assert.Equal(1, booking.RoomId);
-        Assert.True(booking.IsActive);
+        result.Should().BeTrue();
+        booking.RoomId.Should().Be(1);
+        booking.IsActive.Should().BeTrue();
         bookingRepository.Verify(b => b.AddAsync(booking), Times.Once);
     }
 
@@ -203,9 +204,9 @@ public class CreateBookingTest
         var result = await bookingManager.CreateBooking(booking);
 
         // Assert
-        Assert.True(result);
-        Assert.Equal(1, booking.RoomId);
-        Assert.True(booking.IsActive);
+        result.Should().BeTrue();
+        booking.RoomId.Should().Be(1);
+        booking.IsActive.Should().BeTrue();
         bookingRepository.Verify(b => b.AddAsync(booking), Times.Once);
     }
 }

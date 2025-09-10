@@ -7,6 +7,7 @@ using HotelBooking.WebApi.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Xunit;
+using FluentAssertions;
 
 namespace HotelBooking.UnitTests;
 
@@ -62,7 +63,7 @@ public class RoomsControllerTests
         var noOfRooms = result.Count;
 
         // Assert
-        Assert.Equal(2, noOfRooms);
+        noOfRooms.Should().Be(2);
     }
 
     [Fact]
@@ -74,7 +75,7 @@ public class RoomsControllerTests
         var roomId = room.Id;
 
         // Assert
-        Assert.InRange<int>(roomId, 1, 2);
+        roomId.Should().BeInRange(1, 2);
     }
 
     [Fact]
@@ -110,7 +111,7 @@ public class RoomsControllerTests
         Task result() => controller.Delete(3);
 
         // Assert
-        await Assert.ThrowsAsync<InvalidOperationException>(result);
+        await FluentActions.Invoking(result).Should().ThrowAsync<InvalidOperationException>();
 
         // Assert against the mock object
         fakeRoomRepository.Verify(x => x.RemoveAsync(It.IsAny<int>()));

@@ -6,6 +6,7 @@ using HotelBooking.Core.Interfaces;
 using HotelBooking.Core.Services;
 using Moq;
 using Xunit;
+using FluentAssertions;
 
 namespace HotelBooking.UnitTests;
 
@@ -33,7 +34,7 @@ public class GetFullyOccupiedDatesTest
         Task result() => bookingManager.GetFullyOccupiedDates(startDate, endDate);
 
         // Assert
-        await Assert.ThrowsAsync<ArgumentException>(result);
+        await FluentActions.Invoking(result).Should().ThrowAsync<ArgumentException>();
     }
 
     [Fact]
@@ -62,10 +63,10 @@ public class GetFullyOccupiedDatesTest
         var fullyOccupiedDates = await bookingManager.GetFullyOccupiedDates(startDate, endDate);
 
         // Assert
-        Assert.Equal(11, fullyOccupiedDates.Count); // 11 days inclusive (10th to 20th)
-        Assert.Contains(DateTime.Today.AddDays(10), fullyOccupiedDates);
-        Assert.Contains(DateTime.Today.AddDays(15), fullyOccupiedDates);
-        Assert.Contains(DateTime.Today.AddDays(20), fullyOccupiedDates);
+        fullyOccupiedDates.Should().HaveCount(11); // 11 days inclusive (10th to 20th)
+        fullyOccupiedDates.Should().Contain(DateTime.Today.AddDays(10));
+        fullyOccupiedDates.Should().Contain(DateTime.Today.AddDays(15));
+        fullyOccupiedDates.Should().Contain(DateTime.Today.AddDays(20));
     }
 
     [Fact]
@@ -94,7 +95,7 @@ public class GetFullyOccupiedDatesTest
         var fullyOccupiedDates = await bookingManager.GetFullyOccupiedDates(startDate, endDate);
 
         // Assert
-        Assert.Empty(fullyOccupiedDates);
+        fullyOccupiedDates.Should().BeEmpty();
     }
 
     [Fact]
@@ -119,7 +120,7 @@ public class GetFullyOccupiedDatesTest
         var fullyOccupiedDates = await bookingManager.GetFullyOccupiedDates(startDate, endDate);
 
         // Assert
-        Assert.Empty(fullyOccupiedDates);
+        fullyOccupiedDates.Should().BeEmpty();
     }
 
     [Fact]
@@ -152,10 +153,10 @@ public class GetFullyOccupiedDatesTest
 
         // Assert
         // Should return 6 dates (Day 10 through Day 15)
-        Assert.Equal(6, fullyOccupiedDates.Count);
-        Assert.DoesNotContain(DateTime.Today.AddDays(1), fullyOccupiedDates); // Only room 1 booked
-        Assert.Contains(DateTime.Today.AddDays(10), fullyOccupiedDates); // Both rooms booked
-        Assert.Contains(DateTime.Today.AddDays(15), fullyOccupiedDates); // Both rooms booked
+        fullyOccupiedDates.Should().HaveCount(6);
+        fullyOccupiedDates.Should().NotContain(DateTime.Today.AddDays(1)); // Only room 1 booked
+        fullyOccupiedDates.Should().Contain(DateTime.Today.AddDays(10)); // Both rooms booked
+        fullyOccupiedDates.Should().Contain(DateTime.Today.AddDays(15)); // Both rooms booked
     }
 
     [Fact]
@@ -183,8 +184,7 @@ public class GetFullyOccupiedDatesTest
         var fullyOccupiedDates = await bookingManager.GetFullyOccupiedDates(singleDay, singleDay);
 
         // Assert
-        Assert.Single(fullyOccupiedDates);
-        Assert.Contains(singleDay, fullyOccupiedDates);
+        fullyOccupiedDates.Should().ContainSingle().Which.Should().Be(singleDay);
     }
 
     [Fact]
@@ -215,6 +215,6 @@ public class GetFullyOccupiedDatesTest
         var fullyOccupiedDates = await bookingManager.GetFullyOccupiedDates(startDate, endDate);
 
         // Assert
-        Assert.Empty(fullyOccupiedDates);
+        fullyOccupiedDates.Should().BeEmpty();
     }
 }
