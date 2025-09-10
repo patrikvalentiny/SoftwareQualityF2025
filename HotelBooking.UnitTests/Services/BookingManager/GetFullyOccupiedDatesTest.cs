@@ -1,14 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using FluentAssertions;
 using HotelBooking.Core.Entities;
 using HotelBooking.Core.Interfaces;
-using HotelBooking.Core.Services;
 using Moq;
 using Xunit;
-using FluentAssertions;
 
-namespace HotelBooking.UnitTests;
+namespace HotelBooking.UnitTests.Services.BookingManager;
 
 public class GetFullyOccupiedDatesTest
 {
@@ -20,7 +19,7 @@ public class GetFullyOccupiedDatesTest
     {
         bookingRepository = new Mock<IRepository<Booking>>();
         roomRepository = new Mock<IRepository<Room>>();
-        bookingManager = new BookingManager(bookingRepository.Object, roomRepository.Object);
+        bookingManager = new Core.Services.BookingManager(bookingRepository.Object, roomRepository.Object);
     }
 
     [Fact]

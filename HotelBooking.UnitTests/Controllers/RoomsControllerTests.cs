@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using FluentAssertions;
 using HotelBooking.Core.Entities;
 using HotelBooking.Core.Interfaces;
 using HotelBooking.WebApi.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Xunit;
-using FluentAssertions;
 
-namespace HotelBooking.UnitTests;
+namespace HotelBooking.UnitTests.Controllers;
 
 public class RoomsControllerTests
 {

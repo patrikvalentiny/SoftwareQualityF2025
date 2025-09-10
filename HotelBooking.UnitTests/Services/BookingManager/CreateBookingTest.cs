@@ -2,14 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Bogus;
+using FluentAssertions;
 using HotelBooking.Core.Entities;
 using HotelBooking.Core.Interfaces;
-using HotelBooking.Core.Services;
 using Moq;
 using Xunit;
-using FluentAssertions;
 
-namespace HotelBooking.UnitTests;
+namespace HotelBooking.UnitTests.Services.BookingManager;
 
 public class CreateBookingTest
 {
@@ -23,7 +22,7 @@ public class CreateBookingTest
     {
         bookingRepository = new Mock<IRepository<Booking>>();
         roomRepository = new Mock<IRepository<Room>>();
-        bookingManager = new BookingManager(bookingRepository.Object, roomRepository.Object);
+        bookingManager = new Core.Services.BookingManager(bookingRepository.Object, roomRepository.Object);
 
         bookingFaker = new Faker<Booking>()
             .RuleFor(b => b.StartDate, f => f.Date.Future())
