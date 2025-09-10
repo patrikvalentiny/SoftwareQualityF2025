@@ -30,10 +30,10 @@ public class FindAvailableRoomTests
         DateTime date = DateTime.Today;
 
         // Act
-        Task Result() => bookingManager.FindAvailableRoom(date, date);
+        var act = () => bookingManager.FindAvailableRoom(date, date);
 
         // Assert
-        await FluentActions.Invoking(Result).Should().ThrowAsync<ArgumentException>();
+        await act.Should().ThrowAsync<ArgumentException>();
     }
 
     [Fact]
@@ -44,10 +44,10 @@ public class FindAvailableRoomTests
         DateTime endDate = DateTime.Today.AddDays(5);
 
         // Act
-        Task Result() => bookingManager.FindAvailableRoom(pastDate, endDate);
+        var act = () => bookingManager.FindAvailableRoom(pastDate, endDate);
 
         // Assert
-        await FluentActions.Invoking(Result).Should().ThrowAsync<ArgumentException>();
+        await act.Should().ThrowAsync<ArgumentException>();
     }
 
     [Fact]
@@ -58,10 +58,10 @@ public class FindAvailableRoomTests
         DateTime endDate = DateTime.Today.AddDays(5);
 
         // Act
-        Task Result() => bookingManager.FindAvailableRoom(startDate, endDate);
+        var act = () => bookingManager.FindAvailableRoom(startDate, endDate);
 
         // Assert
-        await FluentActions.Invoking(Result).Should().ThrowAsync<ArgumentException>();
+        await act.Should().ThrowAsync<ArgumentException>();
     }
 
     [Fact]

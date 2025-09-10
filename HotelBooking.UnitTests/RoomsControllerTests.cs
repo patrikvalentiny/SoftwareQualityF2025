@@ -108,10 +108,10 @@ public class RoomsControllerTests
                 x.RemoveAsync(It.Is<int>(id => id < 1 || id > 2))).
                 Throws<InvalidOperationException>();
 
-        Task result() => controller.Delete(3);
+        var act = () => controller.Delete(3);
 
         // Assert
-        await FluentActions.Invoking(result).Should().ThrowAsync<InvalidOperationException>();
+        await act.Should().ThrowAsync<InvalidOperationException>();
 
         // Assert against the mock object
         fakeRoomRepository.Verify(x => x.RemoveAsync(It.IsAny<int>()));

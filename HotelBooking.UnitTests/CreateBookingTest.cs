@@ -101,9 +101,12 @@ public class CreateBookingTest
             CustomerId = 1
         };
 
+        // Act
+        var act = () => bookingManager.CreateBooking(booking);
+
         // Act & Assert
-        await FluentActions.Invoking(() => bookingManager.CreateBooking(booking)).Should().ThrowAsync<ArgumentException>();
-        
+        await act.Should().ThrowAsync<ArgumentException>();
+
         // Verify that no repository methods were called due to early validation
         bookingRepository.Verify(b => b.GetAllAsync(), Times.Never);
         roomRepository.Verify(r => r.GetAllAsync(), Times.Never);
@@ -121,8 +124,10 @@ public class CreateBookingTest
             CustomerId = 1
         };
 
+        // Act
+        var act = () => bookingManager.CreateBooking(booking);
         // Act & Assert
-        await FluentActions.Invoking(() => bookingManager.CreateBooking(booking)).Should().ThrowAsync<ArgumentException>();
+        await act.Should().ThrowAsync<ArgumentException>();
     }
 
     [Fact]
@@ -136,8 +141,10 @@ public class CreateBookingTest
             CustomerId = 1
         };
 
+        // Act 
+        var act = () => bookingManager.CreateBooking(booking);
         // Act & Assert
-        await FluentActions.Invoking(() => bookingManager.CreateBooking(booking)).Should().ThrowAsync<ArgumentException>();
+        await act.Should().ThrowAsync<ArgumentException>();
     }
 
     [Fact]
