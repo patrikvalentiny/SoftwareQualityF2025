@@ -13,15 +13,15 @@ We've implemented comprehensive unit testing for the Hotel Booking System's core
 ### 2. Clean Test Organization
 ```
 HotelBooking.UnitTests/
-├── Entities/                    # Tests for domain entities
+├── Entities/                    
 │   ├── BookingTests.cs         
 │   ├── CustomerTests.cs        
 │   └── RoomTests.cs            
-├── Services/BookingManager/     # Business logic tests
-│   ├── CreateBookingTests.cs        # 7 tests
-│   ├── FindAvailableRoomTests.cs    # 7 tests  
-│   └── GetFullyOccupiedDatesTests.cs # 7 tests
-└── Controllers/                 # API tests
+├── Services/BookingManager/     
+│   ├── CreateBookingTests.cs       
+│   ├── FindAvailableRoomTests.cs     
+│   └── GetFullyOccupiedDatesTests.cs 
+└── Controllers/               
     └── RoomsControllerTests.cs
 ```
 
@@ -51,32 +51,69 @@ result.Should().NotBeNull()
 - **Business Logic Tests**: All BookingManager methods thoroughly tested
 - **Consistent Structure**: Each service class has exactly 7 focused tests
 
-## Example Test Structure
+## Test Examples from Each BookingManager Class
+
+### CreateBookingTests Example
 ```csharp
 [Fact]
-public async Task CreateBooking_ValidBooking_ReturnsTrue()
+public async Task CreateBooking_NoRoomAvailable_ReturnsFalseAndDoesNotAddBooking()
 {
     // Arrange
-    var mockRepo = new Mock<IRepository<Booking>>();
-    var booking = CreateTestBooking();
-    
+    var rooms = roomFaker.Generate(2);
+    var bookings = new List<Booking>
+    {
+        CreateBookingWithRoom(DateTime.Today.AddDays(1), DateTime.Today.AddDays(3), rooms[0].Id),
+        CreateBookingWithRoom(DateTime.Today.AddDays(1), DateTime.Today.AddDays(3), rooms[1].Id)
+    };
+    roomRepository.Setup(r => r.GetAllAsync()).ReturnsAsync(rooms);
+    bookingRepository.Setup(b => b.GetAllAsync()).ReturnsAsync(bookings);
+    var booking = CreateBookingWithDates(DateTime.Today.AddDays(2), DateTime.Today.AddDays(2));
+
     // Act
-    bool result = await bookingManager.CreateBooking(booking);
-    
+    var result = await bookingManager.CreateBooking(booking);
+
     // Assert
-    result.Should().BeTrue();
-    mockRepo.Verify(r => r.AddAsync(booking), Times.Once);
+    result.Should().BeFalse();
+    bookingRepository.Verify(b => b.AddAsync(It.IsAny<Booking>()), Times.Never);
 }
 ```
 
-## Known Technical Debt
-**Hardcoded DateTime Usage**: Tests use `DateTime.Today.AddDays()` which makes them non-deterministic.
-- **Problem**: Tests may pass today but fail tomorrow
-- **Solution**: Implement `IDateTimeProvider` interface for controllable time in tests
+### FindAvailableRoomTests Example
+```csharp
+[Fact]
+public async Task FindAvailableRoom_StartDateNotInTheFuture_ThrowsArgumentException()
+{
+    // Arrange
+    DateTime date = DateTime.Today;
+
+    // Act
+    var act = () => bookingManager.FindAvailableRoom(date, date);
+
+    // Assert
+    await act.Should().ThrowAsync<ArgumentException>();
+}
+```
+
+### GetFullyOccupiedDatesTests Example
+```csharp
+[Fact]
+public async Task GetFullyOccupiedDates_StartDateAfterEndDate_ThrowsArgumentException()
+{
+    // Arrange
+    DateTime startDate = DateTime.Today.AddDays(15);
+    DateTime endDate = DateTime.Today.AddDays(10);
+
+    // Act
+    Task result() => bookingManager.GetFullyOccupiedDates(startDate, endDate);
+
+    // Assert
+    await FluentActions.Invoking(result).Should().ThrowAsync<ArgumentException>();
+}
+```
 
 ## Benefits Achieved
-✅ **True Unit Testing**: Complete isolation through proper mocking  
-✅ **Readable Tests**: Natural language assertions with FluentAssertions  
-✅ **Maintainable Code**: Well-organized test structure  
-✅ **Fast Execution**: No external dependencies  
-✅ **Complete Coverage**: 100% confidence in core business logic
+**True Unit Testing**: Complete isolation through proper mocking  
+**Readable Tests**: Natural language assertions with FluentAssertions  
+**Maintainable Code**: Well-organized test structure  
+**Fast Execution**: No external dependencies  
+**Complete Coverage**: 100% confidence in core business logic
