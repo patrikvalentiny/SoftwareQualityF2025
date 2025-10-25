@@ -61,10 +61,8 @@ public class BookingManager(IRepository<Booking> bookingRepository, IRepository<
         {
             for (DateTime d = startDate; d <= endDate; d = d.AddDays(1))
             {
-                var noOfBookings = from b in bookings
-                                   where b.IsActive && d >= b.StartDate && d <= b.EndDate
-                                   select b;
-                if (noOfBookings.Count() >= noOfRooms)
+                var noOfBookings = bookings.Where(b => b.IsActive && d >= b.StartDate && d <= b.EndDate).Count();
+                if (noOfBookings >= noOfRooms)
                     fullyOccupiedDates.Add(d);
             }
         }
