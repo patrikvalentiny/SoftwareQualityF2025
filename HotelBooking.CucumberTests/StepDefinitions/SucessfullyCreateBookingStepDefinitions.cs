@@ -20,6 +20,8 @@ public class CreateBookingStepDefinitions
     private int testRoomId;
     private int testCustomerId;
     private readonly Faker<Room> roomFaker;
+    private DateTime occupiedStart;
+    private DateTime occupiedEnd;
 
 
     public CreateBookingStepDefinitions()
@@ -31,9 +33,17 @@ public class CreateBookingStepDefinitions
         roomFaker = new Faker<Room>()
             .RuleFor(r => r.Id, f => f.Random.Int(1, 1000))
             .RuleFor(r => r.Description, f => f.Commerce.ProductName());
-
-
+        occupiedStart = DateTime.MinValue;
+        occupiedEnd = DateTime.MinValue;
     }
+
+    [Given(@"the occupied period is from {string} to {string}")]
+    public void GivenTheOccupiedPeriodIsFromTo(string start, string end)
+    {
+        occupiedStart = Convert.ToDateTime(start.Trim('"'));
+        occupiedEnd = Convert.ToDateTime(end.Trim('"'));
+    }
+
     [Given(@"I have a booking with start date {string}, end date {string}, room id {int} and customer id {int}")]
     public void GivenIHaveABookingWithStartDateEndDateRoomIdAndCustomerId(string startDate, string endDate, int roomId, int customerId)
     {
@@ -43,13 +53,27 @@ public class CreateBookingStepDefinitions
         testEndDate = end;
         testRoomId = roomId;
         testCustomerId = customerId;
-
     }
+
     [When(@"I create the booking")]
     public async Task WhenICreateTheBooking()
     {
         var rooms = roomFaker.Generate(2);
         var bookings = new List<Booking>();
+        if (occupiedStart != DateTime.MinValue && occupiedEnd != DateTime.MinValue)
+        {
+            foreach (var room in rooms)
+            {
+                bookings.Add(new Booking
+                {
+                    StartDate = occupiedStart,
+                    EndDate = occupiedEnd,
+                    RoomId = room.Id,
+                    CustomerId = 999,
+                    IsActive = true
+                });
+            }
+        }
         roomRepository.Setup(r => r.GetAllAsync()).ReturnsAsync(rooms);
         bookingRepository.Setup(b => b.GetAllAsync()).ReturnsAsync(bookings);
 
@@ -67,6 +91,13 @@ public class CreateBookingStepDefinitions
     [Then(@"the booking should be created successfully")]
     public void ThenTheBookingShouldBeCreatedSuccessfully()
     {
-        createBookingResult.Should().BeTrue();
+        createBookingResult.Should().Be(true);
+    }
+
+    [Then(@"the booking creation should fail due to overlap")]
+    public void ThenTheBookingCreationShouldFailDueToOverlap()
+    {
+        createBookingResult.Should().Be(false);
+
     }
 }

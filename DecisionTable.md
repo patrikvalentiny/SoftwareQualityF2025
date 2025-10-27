@@ -13,7 +13,7 @@ Startdate is denoted SD.
 Enddate is denoted ED.
 
 | Attribute | 1 | 2 | 3 | 4-5 | 6-7 | 8-10 |
-|-----------|---|---|---|-----|-----|------|
+|-----------|---|:--|---|-----|-----|------|
 | SD in     | B | A | B |  B  |  A  |   O  |
 | ED in     | B | A | A |  O  |  O  |   -  |
 | Book room | y | y | n |  n  |  n  |   n  |
