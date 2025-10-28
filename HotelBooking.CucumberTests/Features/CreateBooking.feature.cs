@@ -28,7 +28,7 @@ namespace HotelBooking.CucumberTests.Features
         
         private global::Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "SucessfullyCreateBooking.feature"
+#line 1 "CreateBooking.feature"
 #line hidden
         
         public CreateBookingFeature(CreateBookingFeature.FixtureData fixtureData, global::Xunit.Abstractions.ITestOutputHelper testOutputHelper)
@@ -114,7 +114,7 @@ namespace HotelBooking.CucumberTests.Features
         
         private static global::Reqnroll.Formatters.RuntimeSupport.FeatureLevelCucumberMessages InitializeCucumberMessages()
         {
-            return new global::Reqnroll.Formatters.RuntimeSupport.FeatureLevelCucumberMessages("Features/SucessfullyCreateBooking.feature.ndjson", 9);
+            return new global::Reqnroll.Formatters.RuntimeSupport.FeatureLevelCucumberMessages("Features/CreateBooking.feature.ndjson", 12);
         }
         
         async global::System.Threading.Tasks.Task global::Xunit.IAsyncLifetime.InitializeAsync()
@@ -142,12 +142,12 @@ namespace HotelBooking.CucumberTests.Features
             await this.TestTearDownAsync();
         }
         
-        [global::Xunit.SkippableTheoryAttribute(DisplayName="Successfully create a booking")]
+        [global::Xunit.SkippableTheoryAttribute(DisplayName="Successfully create a booking (1, 2)")]
         [global::Xunit.TraitAttribute("FeatureTitle", "Create Booking")]
-        [global::Xunit.TraitAttribute("Description", "Successfully create a booking")]
+        [global::Xunit.TraitAttribute("Description", "Successfully create a booking (1, 2)")]
         [global::Xunit.InlineDataAttribute("2026-10-01 12:00:00", "2026-10-02 12:00:00", "1", "1", "0", new string[0])]
         [global::Xunit.InlineDataAttribute("2026-10-05 12:00:00", "2026-10-06 12:00:00", "1", "1", "1", new string[0])]
-        public async global::System.Threading.Tasks.Task SuccessfullyCreateABooking(string startDate, string endDate, string roomID, string customerID, string @__pickleIndex, string[] exampleTags)
+        public async global::System.Threading.Tasks.Task SuccessfullyCreateABooking12(string startDate, string endDate, string roomID, string customerID, string @__pickleIndex, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
@@ -156,10 +156,10 @@ namespace HotelBooking.CucumberTests.Features
             argumentsOfScenario.Add("Room ID", roomID);
             argumentsOfScenario.Add("Customer ID", customerID);
             string pickleIndex = @__pickleIndex;
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Successfully create a booking", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Successfully create a booking (1, 2)", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
-#line 10
+#line 11
     this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -172,29 +172,25 @@ namespace HotelBooking.CucumberTests.Features
 #line 7
     await this.FeatureBackgroundAsync();
 #line hidden
-#line 11
+#line 12
         await testRunner.GivenAsync(string.Format("I have a booking with start date \"{0}\", end date \"{1}\", room id {2} and customer " +
                             "id {3}", startDate, endDate, roomID, customerID), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 12
+#line 13
         await testRunner.WhenAsync("I create the booking", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 13
+#line 14
         await testRunner.ThenAsync("the booking should be created successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
         }
         
-        [global::Xunit.SkippableTheoryAttribute(DisplayName="Fail to create a booking due to overlap")]
+        [global::Xunit.SkippableTheoryAttribute(DisplayName="Fail to create a booking due to being fully occupied in the period (3)")]
         [global::Xunit.TraitAttribute("FeatureTitle", "Create Booking")]
-        [global::Xunit.TraitAttribute("Description", "Fail to create a booking due to overlap")]
-        [global::Xunit.InlineDataAttribute("2026-10-02 12:00:00", "2026-10-03 12:00:00", "1", "1", "2", new string[0])]
-        [global::Xunit.InlineDataAttribute("2026-10-03 12:00:00", "2026-10-04 12:00:00", "1", "1", "3", new string[0])]
-        [global::Xunit.InlineDataAttribute("2026-10-04 12:00:00", "2026-10-05 12:00:00", "1", "1", "4", new string[0])]
-        [global::Xunit.InlineDataAttribute("2026-10-02 12:00:00", "2026-10-04 12:00:00", "1", "1", "5", new string[0])]
-        [global::Xunit.InlineDataAttribute("2026-10-01 12:00:00", "2026-10-05 12:00:00", "1", "1", "6", new string[0])]
-        public async global::System.Threading.Tasks.Task FailToCreateABookingDueToOverlap(string startDate, string endDate, string roomID, string customerID, string @__pickleIndex, string[] exampleTags)
+        [global::Xunit.TraitAttribute("Description", "Fail to create a booking due to being fully occupied in the period (3)")]
+        [global::Xunit.InlineDataAttribute("2026-10-02 12:00:00", "2026-10-05 12:00:00", "1", "1", "2", new string[0])]
+        public async global::System.Threading.Tasks.Task FailToCreateABookingDueToBeingFullyOccupiedInThePeriod3(string startDate, string endDate, string roomID, string customerID, string @__pickleIndex, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
@@ -203,10 +199,10 @@ namespace HotelBooking.CucumberTests.Features
             argumentsOfScenario.Add("Room ID", roomID);
             argumentsOfScenario.Add("Customer ID", customerID);
             string pickleIndex = @__pickleIndex;
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Fail to create a booking due to overlap", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Fail to create a booking due to being fully occupied in the period (3)", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
-#line 24
+#line 22
     this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -219,14 +215,147 @@ namespace HotelBooking.CucumberTests.Features
 #line 7
     await this.FeatureBackgroundAsync();
 #line hidden
-#line 25
+#line 23
         await testRunner.GivenAsync(string.Format("I have a booking with start date \"{0}\", end date \"{1}\", room id {2} and customer " +
                             "id {3}", startDate, endDate, roomID, customerID), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 26
+#line 24
         await testRunner.WhenAsync("I create the booking", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 27
+#line 25
+        await testRunner.ThenAsync("the booking creation should fail due to overlap", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [global::Xunit.SkippableTheoryAttribute(DisplayName="Fail to create a booking due to end date overlap (4-5)")]
+        [global::Xunit.TraitAttribute("FeatureTitle", "Create Booking")]
+        [global::Xunit.TraitAttribute("Description", "Fail to create a booking due to end date overlap (4-5)")]
+        [global::Xunit.InlineDataAttribute("2026-10-02 12:00:00", "2026-10-03 12:00:00", "1", "1", "3", new string[0])]
+        [global::Xunit.InlineDataAttribute("2026-10-01 12:00:00", "2026-10-04 12:00:00", "1", "1", "4", new string[0])]
+        public async global::System.Threading.Tasks.Task FailToCreateABookingDueToEndDateOverlap4_5(string startDate, string endDate, string roomID, string customerID, string @__pickleIndex, string[] exampleTags)
+        {
+            string[] tagsOfScenario = exampleTags;
+            global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("Start Date", startDate);
+            argumentsOfScenario.Add("End Date", endDate);
+            argumentsOfScenario.Add("Room ID", roomID);
+            argumentsOfScenario.Add("Customer ID", customerID);
+            string pickleIndex = @__pickleIndex;
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Fail to create a booking due to end date overlap (4-5)", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            string[] tagsOfRule = ((string[])(null));
+            global::Reqnroll.RuleInfo ruleInfo = null;
+#line 32
+    this.ScenarioInitialize(scenarioInfo, ruleInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                await testRunner.SkipScenarioAsync();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 7
+    await this.FeatureBackgroundAsync();
+#line hidden
+#line 33
+        await testRunner.GivenAsync(string.Format("I have a booking with start date \"{0}\", end date \"{1}\", room id {2} and customer " +
+                            "id {3}", startDate, endDate, roomID, customerID), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 34
+        await testRunner.WhenAsync("I create the booking", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 35
+        await testRunner.ThenAsync("the booking creation should fail due to overlap", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [global::Xunit.SkippableTheoryAttribute(DisplayName="Fail to create a booking due to start date overlap (6-7)")]
+        [global::Xunit.TraitAttribute("FeatureTitle", "Create Booking")]
+        [global::Xunit.TraitAttribute("Description", "Fail to create a booking due to start date overlap (6-7)")]
+        [global::Xunit.InlineDataAttribute("2026-10-03 12:00:00", "2026-10-05 12:00:00", "1", "1", "5", new string[0])]
+        [global::Xunit.InlineDataAttribute("2026-10-04 12:00:00", "2026-10-05 12:00:00", "1", "1", "6", new string[0])]
+        public async global::System.Threading.Tasks.Task FailToCreateABookingDueToStartDateOverlap6_7(string startDate, string endDate, string roomID, string customerID, string @__pickleIndex, string[] exampleTags)
+        {
+            string[] tagsOfScenario = exampleTags;
+            global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("Start Date", startDate);
+            argumentsOfScenario.Add("End Date", endDate);
+            argumentsOfScenario.Add("Room ID", roomID);
+            argumentsOfScenario.Add("Customer ID", customerID);
+            string pickleIndex = @__pickleIndex;
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Fail to create a booking due to start date overlap (6-7)", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            string[] tagsOfRule = ((string[])(null));
+            global::Reqnroll.RuleInfo ruleInfo = null;
+#line 43
+    this.ScenarioInitialize(scenarioInfo, ruleInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                await testRunner.SkipScenarioAsync();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 7
+    await this.FeatureBackgroundAsync();
+#line hidden
+#line 44
+        await testRunner.GivenAsync(string.Format("I have a booking with start date \"{0}\", end date \"{1}\", room id {2} and customer " +
+                            "id {3}", startDate, endDate, roomID, customerID), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 45
+        await testRunner.WhenAsync("I create the booking", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 46
+        await testRunner.ThenAsync("the booking creation should fail due to overlap", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [global::Xunit.SkippableTheoryAttribute(DisplayName="Fail to create a booking due both start and end date overlap (8-10)")]
+        [global::Xunit.TraitAttribute("FeatureTitle", "Create Booking")]
+        [global::Xunit.TraitAttribute("Description", "Fail to create a booking due both start and end date overlap (8-10)")]
+        [global::Xunit.InlineDataAttribute("2026-10-03 12:00:00", "2026-10-03 12:00:00", "1", "1", "7", new string[0])]
+        [global::Xunit.InlineDataAttribute("2026-10-04 12:00:00", "2026-10-04 12:00:00", "1", "1", "8", new string[0])]
+        [global::Xunit.InlineDataAttribute("2026-10-03 12:00:00", "2026-10-04 12:00:00", "1", "1", "9", new string[0])]
+        public async global::System.Threading.Tasks.Task FailToCreateABookingDueBothStartAndEndDateOverlap8_10(string startDate, string endDate, string roomID, string customerID, string @__pickleIndex, string[] exampleTags)
+        {
+            string[] tagsOfScenario = exampleTags;
+            global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("Start Date", startDate);
+            argumentsOfScenario.Add("End Date", endDate);
+            argumentsOfScenario.Add("Room ID", roomID);
+            argumentsOfScenario.Add("Customer ID", customerID);
+            string pickleIndex = @__pickleIndex;
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Fail to create a booking due both start and end date overlap (8-10)", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            string[] tagsOfRule = ((string[])(null));
+            global::Reqnroll.RuleInfo ruleInfo = null;
+#line 52
+    this.ScenarioInitialize(scenarioInfo, ruleInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                await testRunner.SkipScenarioAsync();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 7
+    await this.FeatureBackgroundAsync();
+#line hidden
+#line 53
+        await testRunner.GivenAsync(string.Format("I have a booking with start date \"{0}\", end date \"{1}\", room id {2} and customer " +
+                            "id {3}", startDate, endDate, roomID, customerID), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 54
+        await testRunner.WhenAsync("I create the booking", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 55
         await testRunner.ThenAsync("the booking creation should fail due to overlap", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
