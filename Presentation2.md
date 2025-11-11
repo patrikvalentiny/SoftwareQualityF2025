@@ -1,10 +1,10 @@
 # Compulsory Presentation 2
 
-| Testcase no. |  1  |  2  |  3  |  4-5 |  6-7 |  8-10 |
-|--------------|-----|-----|-----|------|------|-------|
-| SD in        |  B  |  A  |  B  |  B   |  O   |  O    |
-| ED in        |  B  |  A  |  A  |  O   |  A   |  O    |
-| Book room    |  y  |  y  |  n  |  n   |  n   |  n    |
+| Testcase no. |  1  |  2  |  3  | 4-5 | 6-7 | 8-10 |
+|--------------|-----|-----|-----|-----|-----|------|
+| SD in        |  B  |  A  |  B  |  B  |  O  |  O   |
+| ED in        |  B  |  A  |  A  |  O  |  A  |  O   |
+| Book room    |  y  |  y  |  n  |  n  |  n  |  n   |
 
 ## Test cases with Boundary Value Analysis
 

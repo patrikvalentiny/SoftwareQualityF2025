@@ -1,7 +1,6 @@
 using System;
 using HotelBooking.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
 using Xunit;
 using System.Net.Http.Json;
 using HotelBooking.Core.Entities;
@@ -12,7 +11,6 @@ namespace HotelBooking.IntegrationTests;
 
 public class CreateBookingTests : IClassFixture<CustomWebAppFactory<Program>>, IDisposable
 {
-
     private readonly CustomWebAppFactory<Program> _factory;
 
     public CreateBookingTests(CustomWebAppFactory<Program> factory)
@@ -134,6 +132,4 @@ public class CreateBookingTests : IClassFixture<CustomWebAppFactory<Program>>, I
         response.IsSuccessStatusCode.Should().BeFalse();
         response.StatusCode.Should().Be(System.Net.HttpStatusCode.Conflict);
     }
-
-
 }
