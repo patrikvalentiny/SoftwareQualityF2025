@@ -49,8 +49,3 @@ graph TD
 - Nodes (N) = 11
 - Edges (E) = 14
 - M = 14 − 11 + 2·1 = 5
-  
-1. M = D + 1 (decision points + 1)
-
-- Decision points (D): line 3 (if startDate>endDate), line 11 (if bookings.Any()), line 13 (for loop test d<=endDate), line 16 (if noOfBookings >= noOfRooms) → D = 4
-- M = 4 + 1 = 5
