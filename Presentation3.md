@@ -1,5 +1,7 @@
 # Presentation 3
 
+## Get fully occupied dates
+
 ```csharp
 1: public async Task<List<DateTime>> GetFullyOccupiedDates(DateTime startDate, DateTime endDate)
 2: {
@@ -57,6 +59,7 @@ graph TD
 (2^3 = 8) of the three chosen conditions and the simple expected outcome for each.
 
 Conditions:
+
 - A: startDate > endDate (precondition — if true the method throws)
 - B: bookings.Any() (are there any bookings?)
 - C: noOfBookings >= noOfRooms (on a particular date d — decides whether d is added)
@@ -80,3 +83,50 @@ Gray-code 8-row table (A, B, C):
 - Test 4 — Bookings with full occupancy: A = 0, B = 1, C = 1 → expect returned date(s).
 
 if there are zero rooms (noOfRooms == 0) then C is true for every date and the method will return all dates in the range when B = 1 and A = 0; treat this as a separate test input if needed.
+
+## Find available room
+
+```csharp
+1: public async Task<int> FindAvailableRoom(DateTime startDate, DateTime endDate)
+2: {
+3:     if (startDate <= DateTime.Today || startDate > endDate)
+4:         throw new ArgumentException("The start date cannot be in the past or later than the end date.");
+5:
+6:     var bookings = await bookingRepository.GetAllAsync();
+7:     var activeBookings = bookings.Where(b => b.IsActive);
+8:     var rooms = await roomRepository.GetAllAsync();
+9:     foreach (var room in rooms)
+10:     {
+11:         var activeBookingsForCurrentRoom = activeBookings.Where(b => b.RoomId == room.Id);
+12:         if (activeBookingsForCurrentRoom.All(b => startDate < b.StartDate &&
+13:             endDate < b.StartDate || startDate > b.EndDate && endDate > b.EndDate))
+14:         {
+15:             return room.Id;
+16:         }
+17:     }
+18:     return -1;
+19: }
+```
+
+```mermaid
+graph TD
+    3((3)) --> 4((4))
+    4((4)) --> 19((19))
+    3((3)) --> 6((6,7,8))
+    6((6,7,8)) --> 9((9))
+    9((9)) --> 11((11))
+    11((11)) --> 12((12,13))
+    12((12,13)) -- true --> 15((15))
+    12((12,13)) -- false --> 9((9))
+    15((15)) --> 9((9))
+    9((9)) --> 18((18))
+    18((18)) --> 19((19))
+```
+
+## Cyclomatic Complexity: 4
+
+1. M = E − N + 2
+
+- Nodes (N) = 9
+- Edges (E) = 11
+- M = 11 − 9 + 2·1 = 4
