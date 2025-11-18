@@ -49,3 +49,34 @@ graph TD
 - Nodes (N) = 11
 - Edges (E) = 14
 - M = 14 − 11 + 2·1 = 5
+
+---
+
+## Multiple Condition Coverage (MCC)
+
+(2^3 = 8) of the three chosen conditions and the simple expected outcome for each.
+
+Conditions:
+- A: startDate > endDate (precondition — if true the method throws)
+- B: bookings.Any() (are there any bookings?)
+- C: noOfBookings >= noOfRooms (on a particular date d — decides whether d is added)
+
+Gray-code 8-row table (A, B, C):
+
+| Row | A | B | C | Outcome |
+|-----:|:-:|:-:|:-:|:--------|
+| 1 | 0 | 0 | 0 | No bookings → returns empty list |
+| 2 | 0 | 0 | 1 | Infeasible (no bookings) → treat as empty list |
+| 3 | 0 | 1 | 1 | At least one fully-occupied date → that date(s) returned |
+| 4 | 0 | 1 | 0 | Bookings exist but no fully-occupied date → empty list |
+| 5 | 1 | 1 | 0 | Precondition fail → throws ArgumentException |
+| 6 | 1 | 1 | 1 | Precondition fail → throws ArgumentException |
+| 7 | 1 | 0 | 1 | Precondition fail → throws ArgumentException |
+| 8 | 1 | 0 | 0 | Precondition fail → throws ArgumentException |
+
+- Test 1 — Precondition: A = 1 → assert ArgumentException.
+- Test 2 — No bookings: A = 0, B = 0 → expect empty list.
+- Test 3 — Bookings but no full occupancy: A = 0, B = 1, C = 0 → expect empty list.
+- Test 4 — Bookings with full occupancy: A = 0, B = 1, C = 1 → expect returned date(s).
+
+if there are zero rooms (noOfRooms == 0) then C is true for every date and the method will return all dates in the range when B = 1 and A = 0; treat this as a separate test input if needed.
